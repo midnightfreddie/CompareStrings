@@ -4,12 +4,8 @@ function Get-Bigrams {
     )
     $Bigrams = @{}
     for ($i = 0; $i -lt $String.Length - 2; $i++) {
-        $Bigram = $String[$i..($i+1)] 
-        if ($Bigrams[$Bigram]) {
-            $Bigrams[$Bigram] += 1
-        } else {
-            $Bigrams[$Bigram] = 1
-        }
+        $Bigram = $String[$i..($i+1)] -join ""
+        $Bigrams[$Bigram] += 1
     }
     Write-Output $Bigrams
 }
