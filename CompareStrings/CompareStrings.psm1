@@ -16,16 +16,20 @@ function Get-Bigrams {
     Write-Output $Bigrams
 }
 
-function Compare-Bigrams {
+# 
+function Compare-BigramVectors {
     param(
-        [Parameter(Mandatory=$true)][hashtable]$Bigram1,
-        [Parameter(Mandatory=$true)][hashtable]$Bigram2
+        [Parameter(Mandatory=$true)][hashtable]$Vector1,
+        [Parameter(Mandatory=$true)][hashtable]$Vector2
     )
     $BigramMatches = 0
-    $Bigram1.GetEnumerator() | ForEach-Object {
-        if ($Bigram2[$PSItem.Name]) {
+    $Vector1.GetEnumerator() | ForEach-Object {
+        # If the bigram exists in both vectors...
+        if ($Vector2[$PSItem.Name]) {
+            # Count the matches. It is possible for each bigram to have multiple occurences (value > 1) in both
+            #   hashes, so using Minimum to bump up the matches once for each of the lower-occuring bigram
             $BigramMatches += (
-                $Bigram1[$PSItem.Name] , $Bigram2[$PSItem.Name] |
+                $Vector1[$PSItem.Name] , $Vector2[$PSItem.Name] |
                     Measure-Object -Minimum
             ).Minimum
         }

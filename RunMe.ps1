@@ -7,4 +7,4 @@ Get-Bigrams $InfoLine
 @{"---" = "---"}
 Get-Bigrams $WmiName
 
-Compare-Bigrams -Bigram1 (Get-Bigrams $InfoLine) -Bigram2 (Get-Bigrams $WmiName)
+Compare-BigramVectors -Vector1 (Get-Bigrams $InfoLine) -Vector2 (Get-Bigrams $WmiName)
