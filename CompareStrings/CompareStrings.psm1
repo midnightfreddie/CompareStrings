@@ -2,7 +2,20 @@
 # This match should only include bigrams with two word characters which hopefully works with non-English Unicode, too
 $ValidBigramMatch = '\w\w'
 
+<#
+.Synopsis
+   String to HashTable of bigrams
+.DESCRIPTION
+   Given a String, returns a HashTable with character bigram strings as keys
+   and the number of occurrences as a value.
+.EXAMPLE
+   Get-Bigrams "This is a string!"
+.PARAMETER String
+   The string to convert to a bigram vector
+#>
 function Get-Bigrams {
+    [cmdletbinding()]
+    [outputtype([hashtable])]
     param (
         [Parameter(Mandatory=$true)][string]$String
     )
@@ -16,8 +29,24 @@ function Get-Bigrams {
     Write-Output $Bigrams
 }
 
-# 
+<#
+.Synopsis
+   Returns matching bigram counts
+.DESCRIPTION
+   Given two bigram occurence HashTables (like the output of Get-Bigrams),
+   return the number of bigram matches between them.
+.EXAMPLE
+   Compare-BigramVectors -Vector1 @{"ab" = 1} -Vector2 @{"ab" = 2}
+.EXAMPLE
+   Compare-BigramVectors -Vector1 (Get-Bigrams "Hello") -Vector2 (Get-Bigrams "He'll be sorry")
+.PARAMETER Vector1
+   A HashTable of bigram strings as keys with the number of occurrences as the value
+.PARAMETER Vector2
+   A HashTable of bigram strings as keys with the number of occurrences as the value
+#>
 function Compare-BigramVectors {
+    [cmdletbinding()]
+    [outputtype([int])]
     param(
         [Parameter(Mandatory=$true)][hashtable]$Vector1,
         [Parameter(Mandatory=$true)][hashtable]$Vector2
