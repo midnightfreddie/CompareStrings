@@ -15,3 +15,20 @@ function Get-Bigrams {
     }
     Write-Output $Bigrams
 }
+
+function Compare-Bigrams {
+    param(
+        [Parameter(Mandatory=$true)][hashtable]$Bigram1,
+        [Parameter(Mandatory=$true)][hashtable]$Bigram2
+    )
+    $BigramMatches = 0
+    $Bigram1.GetEnumerator() | ForEach-Object {
+        if ($Bigram2[$PSItem.Name]) {
+            $BigramMatches += (
+                $Bigram1[$PSItem.Name] , $Bigram2[$PSItem.Name] |
+                    Measure-Object -Minimum
+            ).Minimum
+        }
+    }
+    Write-Output $BigramMatches
+}
