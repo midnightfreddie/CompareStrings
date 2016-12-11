@@ -34,7 +34,8 @@ function Get-Bigrams {
    Returns matching bigram counts
 .DESCRIPTION
    Given two bigram occurence HashTables (like the output of Get-Bigrams),
-   return the number of bigram matches between them.
+   return an object with the number of bigram matches between them and
+   match ratio for each vector.
 .EXAMPLE
    Compare-BigramVectors -Vector1 @{"ab" = 1} -Vector2 @{"ab" = 2}
 .EXAMPLE
@@ -46,7 +47,7 @@ function Get-Bigrams {
 #>
 function Compare-BigramVectors {
     [cmdletbinding()]
-    [outputtype([int])]
+    [outputtype([psobject])]
     param(
         [Parameter(Mandatory=$true)][hashtable]$Vector1,
         [Parameter(Mandatory=$true)][hashtable]$Vector2
@@ -63,5 +64,17 @@ function Compare-BigramVectors {
             ).Minimum
         }
     }
-    Write-Output $BigramMatches
+    New-Object psobject -Property ([ordered]@{
+        Matches = $BigramMatches
+        Vector1Match = $BigramMatches / (
+            $Vector1.GetEnumerator() |
+                Select-Object -ExpandProperty Value |
+                Measure-Object -Sum
+        ).Sum
+        Vector2Match = $BigramMatches / (
+            $Vector2.GetEnumerator() |
+                Select-Object -ExpandProperty Value |
+                Measure-Object -Sum
+        ).Sum
+    })
 }
