@@ -20,7 +20,7 @@ function Get-Bigrams {
         [Parameter(Mandatory=$true)][string]$String
     )
     $Bigrams = @{}
-    for ($i = 0; $i -lt $String.Length - 2; $i++) {
+    for ($i = 0; $i -le $String.Length - 2; $i++) {
         $Bigram = ($String[$i..($i+1)] -join "").ToLower()
         if ($Bigram -match $ValidBigramMatch) {
             $Bigrams[$Bigram] += 1
