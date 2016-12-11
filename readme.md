@@ -6,7 +6,7 @@ which is not doable with a simple operator.
 I decided for the fun of it to make a function to compare these and match
 them using the number of word character bigram matches.
 
-In CompareString/CompareString.psm1 there is a function to convert a string
+In CompareStrings/CompareStrings.psm1 there is a function to convert a string
 to a bigram vector and a function to return matching bigrams between two
 bigram vectors. RunMe.ps1 runs this against the two strings from the reddit post. Sample output:
 
