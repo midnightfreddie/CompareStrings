@@ -30,6 +30,7 @@ function Compare-ManyBigrams {
         $Result.Add(
             (
                 New-Object psobject -Property ([ordered]@{
+                    # [math]::Round isn't necessary; I just got tired of looking at long irrelevant numbers and decided to shrink them
                     Match = [math]::Round((Compare-BigramVectors -Vector1 $BigramObjectList[$i].Bigrams -Vector2 $SearchBigrams).Vector1Match, 5)
                     SamAccountName = $BigramObjectList[$i].SamAccountName
                     Givenname = $BigramObjectList[$i].GivenName
