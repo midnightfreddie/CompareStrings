@@ -1,6 +1,11 @@
+<#
+    A simulation of a solution to the problem that inspired this project.
+    https://www.reddit.com/r/PowerShell/comments/5hf2vi/help_compare_string_to_string/
+#>
+
 Import-Module $PSScriptRoot\CompareStrings\CompareStrings.psm1 -Force
 
-$Info = Get-Content -Path $PSScriptRoot\info.txt | ForEach-Object {
+$Info = Get-Content -Path $PSScriptRoot\data\info.txt | ForEach-Object {
     New-Object psobject -Property ([ordered]@{
         Info = $PSItem
         Vector = Get-Bigrams $PSItem
